@@ -1,5 +1,5 @@
 ;/*!
-; * @file        startup_apm32f10x_hd.s
+; * @file        startup_apm32f10x_cl.s
 ; *
 ; * @brief       CMSIS Cortex-M3 based Core Device Startup File for Device APM32F103
 ; *
@@ -75,8 +75,8 @@ __vector_table
                 DCD     DMA1_Channel6_IRQHandler     ; DMA1 Channel 6
                 DCD     DMA1_Channel7_IRQHandler     ; DMA1 Channel 7
                 DCD     ADC1_2_IRQHandler            ; ADC1 & ADC2
-                DCD     USBD1_HP_CAN1_TX_IRQHandler  ; USBD1 High Priority or CAN1 TX
-                DCD     USBD1_LP_CAN1_RX0_IRQHandler ; USBD1 Low  Priority or CAN1 RX0
+                DCD     CAN1_TX_IRQHandler           ; CAN1 TX
+                DCD     CAN1_RX0_IRQHandler          ; CAN1 RX0
                 DCD     CAN1_RX1_IRQHandler          ; CAN1 RX1
                 DCD     CAN1_SCE_IRQHandler          ; CAN1 SCE
                 DCD     EINT9_5_IRQHandler           ; EINT Line 9..5
@@ -98,13 +98,32 @@ __vector_table
                 DCD     USART3_IRQHandler            ; USART3
                 DCD     EINT15_10_IRQHandler         ; EINT Line 15..10
                 DCD     RTCAlarm_IRQHandler          ; RTC Alarm through EINT Line
-                DCD     USBDWakeUp_IRQHandler        ; USBD Wakeup from suspend
-                DCD     FPU_IRQHandler               ; FPU
-                DCD     QSPI_IRQHandler              ; QSPI
-                DCD     USBD2_HP_IRQHandler          ; USBD2 High Priority
-                DCD     USBD2_LP_IRQHandler          ; USBD2 Low Priority
-__Vectors_End
-
+                DCD     OTG_FS_WKUP_IRQHandler       ; USBD Wakeup from suspend
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     TMR5_IRQHandler              ; TMR5
+                DCD     SPI3_IRQHandler              ; SPI3
+                DCD     UART4_IRQHandler             ; UART4
+                DCD     UART5_IRQHandler             ; UART5
+                DCD     TMR6_IRQHandler              ; TMR6
+                DCD     TMR7_IRQHandler              ; TMR7
+                DCD     DMA2_Channel1_IRQHandler     ; DMA2 Channel1
+                DCD     DMA2_Channel2_IRQHandler     ; DMA2 Channel2
+                DCD     DMA2_Channel3_IRQHandler     ; DMA2 Channel3
+                DCD     DMA2_Channel4_IRQHandler     ; DMA2 Channel4
+                DCD     DMA2_Channel5_IRQHandler     ; DMA2 Channel5
+                DCD     ETH_IRQHandler               ; ETH
+                DCD     ETH_WKUP_IRQHandler          ; ETH Wake up
+                DCD     CAN2_TX_IRQHandler           ; CAN2 TX
+                DCD     CAN2_RX0_IRQHandler          ; CAN2 RX0
+                DCD     CAN2_RX1_IRQHandler          ; CAN2 RX1
+                DCD     CAN2_SCE_IRQHandler          ; CAN2 SCE
+                DCD     OTG_FS_IRQHandler            ; OTG FS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Default interrupt handlers.
@@ -259,15 +278,15 @@ DMA1_Channel7_IRQHandler
 ADC1_2_IRQHandler
         B ADC1_2_IRQHandler
 
-        PUBWEAK USBD1_HP_CAN1_TX_IRQHandler
+        PUBWEAK CAN1_TX_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-USBD1_HP_CAN1_TX_IRQHandler
-        B USBD1_HP_CAN1_TX_IRQHandler
+CAN1_TX_IRQHandler
+        B CAN1_TX_IRQHandler
 
-        PUBWEAK USBD1_LP_CAN1_RX0_IRQHandler
+        PUBWEAK CAN1_RX0_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-USBD1_LP_CAN1_RX0_IRQHandler
-        B USBD1_LP_CAN1_RX0_IRQHandler
+CAN1_RX0_IRQHandler
+        B CAN1_RX0_IRQHandler
 
         PUBWEAK CAN1_RX1_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
@@ -374,31 +393,100 @@ EINT15_10_IRQHandler
 RTCAlarm_IRQHandler
         B RTCAlarm_IRQHandler
 
-        PUBWEAK USBDWakeUp_IRQHandler
+        PUBWEAK OTG_FS_WKUP_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-USBDWakeUp_IRQHandler
-        B USBDWakeUp_IRQHandler
+OTG_FS_WKUP_IRQHandler
+        B OTG_FS_WKUP_IRQHandler
 
-        PUBWEAK FPU_IRQHandler
+        PUBWEAK TMR5_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-FPU_IRQHandler
-        B FPU_IRQHandler
+TMR5_IRQHandler
+        B TMR5_IRQHandler
 
-        PUBWEAK QSPI_IRQHandler
+        PUBWEAK SPI3_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-QSPI_IRQHandler
-        B QSPI_IRQHandler
+SPI3_IRQHandler
+        B SPI3_IRQHandler
 
-        PUBWEAK USBD2_HP_IRQHandler
+        PUBWEAK UART4_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-USBD2_HP_IRQHandler
-        B USBD2_HP_IRQHandler
+UART4_IRQHandler
+        B UART4_IRQHandler
 
-        PUBWEAK USBD2_LP_IRQHandler
+        PUBWEAK UART5_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-USBD2_LP_IRQHandler
-        B USBD2_LP_IRQHandler
+UART5_IRQHandler
+        B UART5_IRQHandler
 
+        PUBWEAK TMR6_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TMR6_IRQHandler
+        B TMR6_IRQHandler
+
+        PUBWEAK TMR7_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+TMR7_IRQHandler
+        B TMR7_IRQHandler
+
+        PUBWEAK DMA2_Channel1_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel1_IRQHandler
+        B DMA2_Channel1_IRQHandler
+
+        PUBWEAK DMA2_Channel2_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel2_IRQHandler
+        B DMA2_Channel2_IRQHandler
+
+        PUBWEAK DMA2_Channel3_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel3_IRQHandler
+        B DMA2_Channel3_IRQHandler
+
+        PUBWEAK DMA2_Channel4_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel4_IRQHandler
+        B DMA2_Channel4_IRQHandler
+
+        PUBWEAK DMA2_Channel5_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+DMA2_Channel5_IRQHandler
+        B DMA2_Channel5_IRQHandler
+
+        PUBWEAK ETH_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+ETH_IRQHandler
+        B ETH_IRQHandler
+
+        PUBWEAK ETH_WKUP_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+ETH_WKUP_IRQHandler
+        B ETH_WKUP_IRQHandler
+
+        PUBWEAK CAN2_TX_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+CAN2_TX_IRQHandler
+        B CAN2_TX_IRQHandler
+
+        PUBWEAK CAN2_RX0_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+CAN2_RX0_IRQHandler
+        B CAN2_RX0_IRQHandler
+
+        PUBWEAK CAN2_RX1_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+CAN2_RX1_IRQHandler
+        B CAN2_RX1_IRQHandler
+
+        PUBWEAK CAN2_SCE_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+CAN2_SCE_IRQHandler
+        B CAN2_SCE_IRQHandler
+
+        PUBWEAK OTG_FS_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+OTG_FS_IRQHandler
+        B OTG_FS_IRQHandler
 
         END
 

@@ -3,9 +3,9 @@
  *
  * @brief       This file contains all the functions prototypes for the SPI firmware library
  *
- * @version     V1.0.2
+ * @version     V1.0.4
  *
- * @date        2022-01-05
+ * @date        2022-12-01
  *
  * @attention
  *
@@ -15,7 +15,7 @@
  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
  *
  *  The program is only for reference, which is distributed in the hope
- *  that it will be usefull and instructional for customers to develop
+ *  that it will be useful and instructional for customers to develop
  *  their software. Unless required by applicable law or agreed to in
  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,16 +23,18 @@
  *  and limitations under the License.
  */
 
+/* Define to prevent recursive inclusion */
 #ifndef __APM32F10X_SPI_H
 #define __APM32F10X_SPI_H
+
+/* Includes */
+#include "apm32f10x.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "apm32f10x.h"
-
-/** @addtogroup Peripherals_Library Standard Peripheral Library
+/** @addtogroup APM32F10x_StdPeriphDriver
   @{
 */
 
@@ -40,7 +42,7 @@ extern "C" {
   @{
 */
 
-/** @addtogroup SPI_Enumerations Enumerations
+/** @defgroup SPI_Enumerations Enumerations
   @{
 */
 
@@ -243,7 +245,7 @@ typedef enum
 /**@} end of group SPI_Enumerations*/
 
 
-/** @addtogroup SPI_Structure Data Structure
+/** @addtogroup SPI_Structures Structures
   @{
 */
 
@@ -276,55 +278,55 @@ typedef struct
     I2S_CLKPOL_T        polarity;
 } I2S_Config_T;
 
-/**@} end of group SPI_Structure*/
+/**@} end of group SPI_Structures */
 
-/** @addtogroup SPI_Fuctions Fuctions
+/** @defgroup SPI_Functions Functions
   @{
 */
 
-/** Reset and Configuration */
-void SPI_I2S_Reset(SPI_T *spi);
-void SPI_Config(SPI_T *spi, SPI_Config_T *spiConfig);
-void I2S_Config(SPI_T *spi, I2S_Config_T *i2sConfig);
-void SPI_ConfigStructInit(SPI_Config_T *spiConfig);
-void I2S_ConfigStructInit(I2S_Config_T *i2sConfig);
-void SPI_Enable(SPI_T *spi);
-void SPI_Disable(SPI_T *spi);
-void I2S_Enable(SPI_T *spi);
-void I2S_Disable(SPI_T *spi);
+/* Reset and Configuration */
+void SPI_I2S_Reset(SPI_T* spi);
+void SPI_Config(SPI_T* spi, SPI_Config_T* spiConfig);
+void I2S_Config(SPI_T* spi, I2S_Config_T* i2sConfig);
+void SPI_ConfigStructInit(SPI_Config_T* spiConfig);
+void I2S_ConfigStructInit(I2S_Config_T* i2sConfig);
+void SPI_Enable(SPI_T* spi);
+void SPI_Disable(SPI_T* spi);
+void I2S_Enable(SPI_T* spi);
+void I2S_Disable(SPI_T* spi);
 
-void SPI_I2S_TxData(SPI_T *spi, uint16_t data);
-uint16_t SPI_I2S_RxData(SPI_T *spi);
-void SPI_SetSoftwareNSS(SPI_T *spi);
-void SPI_ResetSoftwareNSS(SPI_T *spi);
-void SPI_EnableSSOutput(SPI_T *spi);
-void SPI_DisableSSOutput(SPI_T *spi);
-void SPI_ConfigDataSize(SPI_T *spi, SPI_DATA_LENGTH_T length);
+void SPI_I2S_TxData(SPI_T* spi, uint16_t data);
+uint16_t SPI_I2S_RxData(SPI_T* spi);
+void SPI_SetSoftwareNSS(SPI_T* spi);
+void SPI_ResetSoftwareNSS(SPI_T* spi);
+void SPI_EnableSSOutput(SPI_T* spi);
+void SPI_DisableSSOutput(SPI_T* spi);
+void SPI_ConfigDataSize(SPI_T* spi, SPI_DATA_LENGTH_T length);
 
-/** DMA */
-void SPI_I2S_EnableDMA(SPI_T *spi, SPI_I2S_DMA_REQ_T dmaReq);
-void SPI_I2S_DisableDMA(SPI_T *spi, SPI_I2S_DMA_REQ_T dmaReq);
+/* DMA */
+void SPI_I2S_EnableDMA(SPI_T* spi, SPI_I2S_DMA_REQ_T dmaReq);
+void SPI_I2S_DisableDMA(SPI_T* spi, SPI_I2S_DMA_REQ_T dmaReq);
 
-/** CRC */
-void SPI_TxCRC(SPI_T *spi);
-void SPI_EnableCRC(SPI_T *spi);
-void SPI_DisableCRC(SPI_T *spi);
-uint16_t SPI_ReadTxCRC(SPI_T *spi);
-uint16_t SPI_ReadRxCRC(SPI_T *spi);
-uint16_t SPI_ReadCRCPolynomial(SPI_T *spi);
-void SPI_ConfigBiDirectionalLine(SPI_T *spi, SPI_DIRECTION_SELECT_T direction);
+/* CRC */
+void SPI_TxCRC(SPI_T* spi);
+void SPI_EnableCRC(SPI_T* spi);
+void SPI_DisableCRC(SPI_T* spi);
+uint16_t SPI_ReadTxCRC(SPI_T* spi);
+uint16_t SPI_ReadRxCRC(SPI_T* spi);
+uint16_t SPI_ReadCRCPolynomial(SPI_T* spi);
+void SPI_ConfigBiDirectionalLine(SPI_T* spi, SPI_DIRECTION_SELECT_T direction);
 
-/** Interrupts and flag */
-void SPI_I2S_EnableInterrupt(SPI_T *spi, SPI_I2S_INT_T interrupt);
-void SPI_I2S_DisableInterrupt(SPI_T *spi, SPI_I2S_INT_T interrupt);
-uint8_t SPI_I2S_ReadStatusFlag(SPI_T *spi, SPI_FLAG_T flag);
-void SPI_I2S_ClearStatusFlag(SPI_T *spi, SPI_FLAG_T flag);
-uint8_t SPI_I2S_ReadIntFlag(SPI_T *spi, SPI_I2S_INT_T flag);
-void SPI_I2S_ClearIntFlag(SPI_T *spi, SPI_I2S_INT_T flag);
+/* Interrupts and flag */
+void SPI_I2S_EnableInterrupt(SPI_T* spi, SPI_I2S_INT_T interrupt);
+void SPI_I2S_DisableInterrupt(SPI_T* spi, SPI_I2S_INT_T interrupt);
+uint8_t SPI_I2S_ReadStatusFlag(SPI_T* spi, SPI_FLAG_T flag);
+void SPI_I2S_ClearStatusFlag(SPI_T* spi, SPI_FLAG_T flag);
+uint8_t SPI_I2S_ReadIntFlag(SPI_T* spi, SPI_I2S_INT_T flag);
+void SPI_I2S_ClearIntFlag(SPI_T* spi, SPI_I2S_INT_T flag);
 
-/**@} end of group SPI_Fuctions*/
-/**@} end of group SPI_Driver*/
-/**@} end of group Peripherals_Library*/
+/**@} end of group SPI_Functions */
+/**@} end of group SPI_Driver */
+/**@} end of group APM32F10x_StdPeriphDriver */
 
 #ifdef __cplusplus
 }

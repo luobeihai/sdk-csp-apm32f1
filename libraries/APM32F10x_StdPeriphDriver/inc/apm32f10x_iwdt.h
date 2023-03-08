@@ -3,9 +3,9 @@
  *
  * @brief       This file contains all the functions prototypes for the IWDT firmware library
  *
- * @version     V1.0.2
+ * @version     V1.0.4
  *
- * @date        2022-01-05
+ * @date        2022-12-01
  *
  * @attention
  *
@@ -15,7 +15,7 @@
  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
  *
  *  The program is only for reference, which is distributed in the hope
- *  that it will be usefull and instructional for customers to develop
+ *  that it will be useful and instructional for customers to develop
  *  their software. Unless required by applicable law or agreed to in
  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,16 +23,18 @@
  *  and limitations under the License.
  */
 
+/* Define to prevent recursive inclusion */
 #ifndef __APM32F10X_IWDT_H
 #define __APM32F10X_IWDT_H
+
+/* Includes */
+#include "apm32f10x.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "apm32f10x.h"
-
-/** @addtogroup Peripherals_Library Standard Peripheral Library
+/** @addtogroup APM32F10x_StdPeriphDriver
   @{
 */
 
@@ -40,7 +42,7 @@ extern "C" {
   @{
 */
 
-/** @addtogroup IWDT_Enumerations Enumerations
+/** @defgroup IWDT_Enumerations Enumerations
   @{
 */
 
@@ -88,32 +90,32 @@ typedef enum
 /**@} end of group IWDT_Enumerations*/
 
 
-/** @addtogroup IWDT_Fuctions Fuctions
+/** @defgroup IWDT_Functions Functions
   @{
 */
 
-/** Enable IWDT */
+/* Enable IWDT */
 void IWDT_Enable(void);
 
-/** Refresh IWDT */
+/* Refresh IWDT */
 void IWDT_Refresh(void);
 
-/** Counter reload */
+/* Counter reload */
 void IWDT_ConfigReload(uint16_t reload);
 
-/** Divider */
+/* Divider */
 void IWDT_ConfigDivider(uint8_t div);
 
-/** Write Access */
+/* Write Access */
 void IWDT_EnableWriteAccess(void);
 void IWDT_DisableWriteAccess(void);
 
-/** flag */
+/* flag */
 uint8_t IWDT_ReadStatusFlag(uint16_t flag);
 
-/**@} end of group IWDT_Fuctions*/
-/**@} end of group IWDT_Driver*/
-/**@} end of group Peripherals_Library*/
+/**@} end of group IWDT_Functions*/
+/**@} end of group IWDT_Driver */
+/**@} end of group APM32F10x_StdPeriphDriver*/
 
 #ifdef __cplusplus
 }

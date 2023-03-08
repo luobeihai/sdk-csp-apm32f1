@@ -127,9 +127,9 @@ g_apm32_Vectors:
   .word DMA1_Channel5_IRQHandler            // DMA1 Channel 5
   .word DMA1_Channel6_IRQHandler            // DMA1 Channel 6
   .word DMA1_Channel7_IRQHandler            // DMA1 Channel 7
-  .word ADC1_2_IRQHandler                   // ADC1_2
-  .word USBD1_HP_CAN1_TX_IRQHandler         // USBD1 High Priority or CAN1 TX
-  .word USBD1_LP_CAN1_RX0_IRQHandler        // USBD1 Low  Priority or CAN1 RX0
+  .word ADC1_2_IRQHandler                   // ADC1 & ADC2
+  .word CAN1_TX_IRQHandler                  // CAN1 TX
+  .word CAN1_RX0_IRQHandler                 // CAN1 RX0
   .word CAN1_RX1_IRQHandler                 // CAN1 RX1
   .word CAN1_SCE_IRQHandler                 // CAN1 SCE
   .word EINT9_5_IRQHandler                  // EINT Line 9..5
@@ -151,11 +151,33 @@ g_apm32_Vectors:
   .word USART3_IRQHandler                   // USART3
   .word EINT15_10_IRQHandler                // EINT Line 15..10
   .word RTCAlarm_IRQHandler                 // RTC Alarm through EINT Line
-  .word USBDWakeUp_IRQHandler               // USBD Wakeup from suspend
-  .word FPU_IRQHandler                      // FPU
-  .word QSPI_IRQHandler                     // QSPI
-  .word USBD2_HP_IRQHandler                 // USBD2 High Priority
-  .word USBD2_LP_IRQHandler                 // USBD2 Low Priority
+  .word OTG_FS_WKUP_IRQHandler              // USBD Wakeup from suspend
+  .word 0                                   // Reserved
+  .word 0                                   // Reserved
+  .word 0                                   // Reserved
+  .word 0                                   // Reserved
+  .word 0                                   // Reserved
+  .word 0                                   // Reserved
+  .word 0                                   // Reserved
+  .word TMR5_IRQHandler                     // TMR5
+  .word SPI3_IRQHandler                     // SPI3
+  .word UART4_IRQHandler                    // UART4
+  .word UART5_IRQHandler                    // UART5
+  .word TMR6_IRQHandler                     // TMR6
+  .word TMR7_IRQHandler                     // TMR7
+  .word DMA2_Channel1_IRQHandler            // DMA2 Channel1
+  .word DMA2_Channel2_IRQHandler            // DMA2 Channel2
+  .word DMA2_Channel3_IRQHandler            // DMA2 Channel3
+  .word DMA2_Channel4_IRQHandler            // DMA2 Channel4
+  .word DMA2_Channel5_IRQHandler            // DMA2 Channel5
+  .word ETH_IRQHandler                      // ETH
+  .word ETH_WKUP_IRQHandler                 // ETH Wake up
+  .word CAN2_TX_IRQHandler                  // CAN2 TX
+  .word CAN2_RX0_IRQHandler                 // CAN2 RX0
+  .word CAN2_RX1_IRQHandler                 // CAN2 RX1
+  .word CAN2_SCE_IRQHandler                 // CAN2 SCE
+  .word OTG_FS_IRQHandler                   // OTG FS
+
 // Default exception/interrupt handler
 
   .weak NMI_Handler
@@ -242,11 +264,17 @@ g_apm32_Vectors:
   .weak ADC1_2_IRQHandler
   .thumb_set ADC1_2_IRQHandler,Default_Handler
 
-  .weak USBD1_HP_CAN1_TX_IRQHandler
-  .thumb_set USBD1_HP_CAN1_TX_IRQHandler,Default_Handler
+  .weak USBD_HP_CAN1_TX_IRQHandler
+  .thumb_set USBD_HP_CAN1_TX_IRQHandler,Default_Handler
 
-  .weak USBD1_LP_CAN1_RX0_IRQHandler
-  .thumb_set USBD1_LP_CAN1_RX0_IRQHandler,Default_Handler
+  .weak USBD_LP_CAN1_RX0_IRQHandler
+  .thumb_set USBD_LP_CAN1_RX0_IRQHandler,Default_Handler
+
+  .weak CAN1_TX_IRQHandler
+  .thumb_set CAN1_TX_IRQHandler,Default_Handler
+
+  .weak CAN1_RX0_IRQHandler
+  .thumb_set CAN1_RX0_IRQHandler,Default_Handler
 
   .weak CAN1_RX1_IRQHandler
   .thumb_set CAN1_RX1_IRQHandler,Default_Handler
@@ -311,17 +339,59 @@ g_apm32_Vectors:
   .weak RTCAlarm_IRQHandler
   .thumb_set RTCAlarm_IRQHandler,Default_Handler
 
-  .weak USBDWakeUp_IRQHandler
-  .thumb_set USBDWakeUp_IRQHandler,Default_Handler
+  .weak OTG_FS_WKUP_IRQHandler
+  .thumb_set OTG_FS_WKUP_IRQHandler,Default_Handler
 
-  .weak FPU_IRQHandler
-  .thumb_set FPU_IRQHandler,Default_Handler
+  .weak TMR5_IRQHandler
+  .thumb_set TMR5_IRQHandler,Default_Handler
 
-  .weak QSPI_IRQHandler
-  .thumb_set QSPI_IRQHandler,Default_Handler
+  .weak SPI3_IRQHandler
+  .thumb_set SPI3_IRQHandler,Default_Handler
 
-  .weak USBD2_HP_IRQHandler
-  .thumb_set USBD2_HP_IRQHandler,Default_Handler
+  .weak UART4_IRQHandler
+  .thumb_set UART4_IRQHandler,Default_Handler
 
-  .weak USBD2_LP_IRQHandler
-  .thumb_set USBD2_LP_IRQHandler,Default_Handler
+  .weak UART5_IRQHandler
+  .thumb_set UART5_IRQHandler,Default_Handler
+
+  .weak TMR6_IRQHandler
+  .thumb_set TMR6_IRQHandler,Default_Handler
+
+  .weak TMR7_IRQHandler
+  .thumb_set TMR7_IRQHandler,Default_Handler
+
+  .weak DMA2_Channel1_IRQHandler
+  .thumb_set DMA2_Channel1_IRQHandler,Default_Handler
+
+  .weak DMA2_Channel2_IRQHandler
+  .thumb_set DMA2_Channel2_IRQHandler,Default_Handler
+
+  .weak DMA2_Channel3_IRQHandler
+  .thumb_set DMA2_Channel3_IRQHandler,Default_Handler
+
+  .weak DMA2_Channel4_IRQHandler
+  .thumb_set DMA2_Channel4_IRQHandler,Default_Handler
+
+  .weak DMA2_Channel5_IRQHandler
+  .thumb_set DMA2_Channel5_IRQHandler,Default_Handler
+
+  .weak ETH_IRQHandler
+  .thumb_set ETH_IRQHandler,Default_Handler
+
+  .weak ETH_WKUP_IRQHandler
+  .thumb_set ETH_WKUP_IRQHandler,Default_Handler
+
+  .weak CAN2_TX_IRQHandler
+  .thumb_set CAN2_TX_IRQHandler,Default_Handler
+
+  .weak CAN2_RX0_IRQHandler
+  .thumb_set CAN2_RX0_IRQHandler,Default_Handler
+
+  .weak CAN2_RX1_IRQHandler
+  .thumb_set CAN2_RX1_IRQHandler,Default_Handler
+
+  .weak CAN2_SCE_IRQHandler
+  .thumb_set CAN2_SCE_IRQHandler,Default_Handler
+
+  .weak OTG_FS_IRQHandler
+  .thumb_set OTG_FS_IRQHandler,Default_Handler

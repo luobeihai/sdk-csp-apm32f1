@@ -3,9 +3,9 @@
  *
  * @brief       This file contains all the functions prototypes for the SDIO firmware library
  *
- * @version     V1.0.2
+ * @version     V1.0.4
  *
- * @date        2022-01-05
+ * @date        2022-12-01
  *
  * @attention
  *
@@ -15,7 +15,7 @@
  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
  *
  *  The program is only for reference, which is distributed in the hope
- *  that it will be usefull and instructional for customers to develop
+ *  that it will be useful and instructional for customers to develop
  *  their software. Unless required by applicable law or agreed to in
  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,16 +23,18 @@
  *  and limitations under the License.
  */
 
+/* Define to prevent recursive inclusion */
 #ifndef __APM32F10X_SDIO_H
 #define __APM32F10X_SDIO_H
+
+/* Includes */
+#include "apm32f10x.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "apm32f10x.h"
-
-/** @addtogroup Peripherals_Library Standard Peripheral Library
+/** @addtogroup APM32F10x_StdPeriphDriver
   @{
 */
 
@@ -40,7 +42,7 @@ extern "C" {
   @{
 */
 
-/** @addtogroup SDIO_Enumerations Enumerations
+/** @defgroup SDIO_Enumerations Enumerations
   @{
 */
 
@@ -259,73 +261,73 @@ typedef enum
     SDIO_READ_WAIT_MODE_DATA2 = 0x00000000
 } SDIO_READ_WAIT_MODE_T;
 
-/**@} end of group SDIO_Enumerations*/
+/**@} end of group SDIO_Enumerations */
 
 
-/** @addtogroup SDIO_Macros Macros
+/** @defgroup SDIO_Macros Macros
   @{
 */
 
-/** ------------ SDIO registers bit address in the alias region ----------- */
+/* ------------ SDIO registers bit address in the alias region ----------- */
 #define SDIO_OFFSET                (SDIO_BASE - PERIPH_BASE)
 
-/** --- CLKCTRL Register ---*/
+/* --- CLKCTRL Register --- */
 
-/** Alias word address of CLKEN bit */
+/* Alias word address of CLKEN bit */
 #define CLKCTRL_OFFSET            (SDIO_OFFSET + 0x04)
 #define CLKEN_BitNumber            0x08
 #define CLKCTRL_CLKEN_BB          (PERIPH_BB_BASE + (CLKCTRL_OFFSET * 32) + (CLKEN_BitNumber * 4))
 
-/** --- CMD Register ---*/
+/* --- CMD Register --- */
 
-/** Alias word address of SDIOSC bit */
+/* Alias word address of SDIOSC bit */
 #define CMD_OFFSET                (SDIO_OFFSET + 0x0C)
 #define SDIOSC_BitNumber           0x0B
 #define CMD_SDIOSC_BB             (PERIPH_BB_BASE + (CMD_OFFSET * 32) + (SDIOSC_BitNumber * 4))
 
-/** Alias word address of CMDCPEN bit */
+/* Alias word address of CMDCPEN bit */
 #define CMDCPEN_BitNumber          0x0C
 #define CMD_CMDCPEN_BB            (PERIPH_BB_BASE + (CMD_OFFSET * 32) + (CMDCPEN_BitNumber * 4))
 
-/** Alias word address of INTEN bit */
+/* Alias word address of INTEN bit */
 #define INTEN_BitNumber            0x0D
 #define CMD_INTEN_BB              (PERIPH_BB_BASE + (CMD_OFFSET * 32) + (INTEN_BitNumber * 4))
 
-/** Alias word address of ATACMD bit */
+/* Alias word address of ATACMD bit */
 #define ATACMD_BitNumber           0x0E
 #define CMD_ATACMD_BB             (PERIPH_BB_BASE + (CMD_OFFSET * 32) + (ATACMD_BitNumber * 4))
 
-/** --- DCTRL Register ---*/
+/* --- DCTRL Register --- */
 
-/** Alias word address of DMAEN bit */
+/* Alias word address of DMAEN bit */
 #define DCTRL_OFFSET              (SDIO_OFFSET + 0x2C)
 #define DMAEN_BitNumber            0x03
 #define DCTRL_DMAEN_BB            (PERIPH_BB_BASE + (DCTRL_OFFSET * 32) + (DMAEN_BitNumber * 4))
 
-/** Alias word address of RWSTR bit */
+/* Alias word address of RWSTR bit */
 #define RWSTR_BitNumber            0x08
 #define DCTRL_RWSTR_BB            (PERIPH_BB_BASE + (DCTRL_OFFSET * 32) + (RWSTR_BitNumber * 4))
 
-/** Alias word address of RWSTOP bit */
+/* Alias word address of RWSTOP bit */
 #define RWSTOP_BitNumber           0x09
 #define DCTRL_RWSTOP_BB           (PERIPH_BB_BASE + (DCTRL_OFFSET * 32) + (RWSTOP_BitNumber * 4))
 
-/** Alias word address of RDWAIT bit */
+/* Alias word address of RDWAIT bit */
 #define RDWAIT_BitNumber           0x0A
 #define DCTRL_RDWAIT_BB           (PERIPH_BB_BASE + (DCTRL_OFFSET * 32) + (RDWAIT_BitNumber * 4))
 
-/** Alias word address of SDIOF bit */
+/* Alias word address of SDIOF bit */
 #define SDIOF_BitNumber            0x0B
 #define DCTRL_SDIOF_BB            (PERIPH_BB_BASE + (DCTRL_OFFSET * 32) + (SDIOF_BitNumber * 4))
 
-/**@} end of group SDIO_Macros*/
+/**@} end of group SDIO_Macros */
 
-/** @addtogroup SDIO_Structure Data Structure
+/** @defgroup SDIO_Structures Structures
   @{
 */
 
 /**
- * @brief    SDIO Config structure definition
+ * @brief    SDIO Configure structure definition
  */
 typedef struct
 {
@@ -338,7 +340,7 @@ typedef struct
 } SDIO_Config_T;
 
 /**
- * @brief    SDIO CMD Config structure definition
+ * @brief    SDIO CMD Configure structure definition
  */
 typedef struct
 {
@@ -350,7 +352,7 @@ typedef struct
 } SDIO_CmdConfig_T;
 
 /**
- * @brief    SDIO Data Config structure definition
+ * @brief    SDIO Data Configure structure definition
  */
 typedef struct
 {
@@ -362,41 +364,40 @@ typedef struct
     SDIO_DPSM_T                  DPSM;
 } SDIO_DataConfig_T;
 
-/**@} end of group SDIO_Structure*/
+/**@} end of group SDIO_Structures */
 
-
-/** @addtogroup SDIO_Fuctions Fuctions
+/** @defgroup SDIO_Functions Functions
   @{
 */
 
-/** SDIO reset and configuration */
+/* SDIO reset and configuration */
 void SDIO_Reset(void);
-void SDIO_Config(SDIO_Config_T *sdioConfig);
-void SDIO_ConfigStructInit(SDIO_Config_T *sdioConfig);
+void SDIO_Config(SDIO_Config_T* sdioConfig);
+void SDIO_ConfigStructInit(SDIO_Config_T* sdioConfig);
 void SDIO_EnableClock(void);
 void SDIO_DisableClock(void);
 void SDIO_ConfigPowerState(SDIO_POWER_STATE_T powerState);
 uint32_t SDIO_ReadPowerState(void);
 
-/** DMA */
+/* DMA */
 void SDIO_EnableDMA(void);
 void SDIO_DisableDMA(void);
 
-/** Command */
-void SDIO_TxCommand(SDIO_CmdConfig_T *cmdConfig);
-void SDIO_TxCommandStructInit(SDIO_CmdConfig_T *cmdconfig);
+/* Command */
+void SDIO_TxCommand(SDIO_CmdConfig_T* cmdConfig);
+void SDIO_TxCommandStructInit(SDIO_CmdConfig_T* cmdconfig);
 uint8_t SDIO_ReadCommandResponse(void);
 uint32_t SDIO_ReadResponse(SDIO_RES_T res);
 
-/** SDIO data configuration */
-void SDIO_ConfigData(SDIO_DataConfig_T *dataConfig);
-void SDIO_ConfigDataStructInit(SDIO_DataConfig_T *dataConfig);
+/* SDIO data configuration */
+void SDIO_ConfigData(SDIO_DataConfig_T* dataConfig);
+void SDIO_ConfigDataStructInit(SDIO_DataConfig_T* dataConfig);
 uint32_t SDIO_ReadDataCounter(void);
 void SDIO_WriteData(uint32_t data);
 uint32_t SDIO_ReadData(void);
 uint32_t SDIO_ReadFIFOCount(void);
 
-/** SDIO mode */
+/* SDIO mode */
 void SDIO_EnableStartReadWait(void);
 void SDIO_DisableStartReadWait(void);
 void SDIO_EnableStopReadWait(void);
@@ -413,7 +414,7 @@ void SDIO_DisableCEATAInterrupt(void);
 void SDIO_EnableTxCEATA(void);
 void SDIO_DisableTxCEATA(void);
 
-/** Interrupt and flags */
+/* Interrupt and flags */
 void SDIO_EnableInterrupt(uint32_t interrupt);
 void SDIO_DisableInterrupt(uint32_t interrupt);
 uint8_t SDIO_ReadStatusFlag(SDIO_FLAG_T flag);
@@ -421,12 +422,12 @@ void SDIO_ClearStatusFlag(uint32_t flag);
 uint8_t SDIO_ReadIntFlag(SDIO_INT_T flag);
 void SDIO_ClearIntFlag(uint32_t flag);
 
-/**@} end of group SDIO_Fuctions*/
-/**@} end of group SDIO_Driver*/
-/**@} end of group Peripherals_Library*/
+/**@} end of group SDIO_Functions */
+/**@} end of group SDIO_Driver */
+/**@} end of group APM32F10x_StdPeriphDriver */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __APM32F10X_SDIO_H */
+#endif /*__APM32F10X_SDIO_H */

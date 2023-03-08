@@ -1,9 +1,9 @@
 ;/*!
-; * @file        startup_apm32f10x_md.s
+; * @file        startup_apm32f10x_cl.s
 ; *
-; * @brief       CMSIS Cortex-M3 based Core Device Startup File for Device startup_apm32f10x_md
+; * @brief       CMSIS Cortex-M3 based Core Device Startup File for Device startup_apm32f10x_cl
 ; *
-; * @version     V1.0.3
+; * @version     V1.0.0
 ; *
 ; * @date        2022-07-25
 ; *
@@ -91,9 +91,9 @@ __Vectors       DCD     __initial_sp                 ; Top of Stack
                 DCD     DMA1_Channel5_IRQHandler     ; DMA1 Channel 5
                 DCD     DMA1_Channel6_IRQHandler     ; DMA1 Channel 6
                 DCD     DMA1_Channel7_IRQHandler     ; DMA1 Channel 7
-                DCD     ADC1_2_IRQHandler            ; ADC1_2
-                DCD     USBD1_HP_CAN1_TX_IRQHandler  ; USBD1 High Priority or CAN1 TX
-                DCD     USBD1_LP_CAN1_RX0_IRQHandler ; USBD1 Low  Priority or CAN1 RX0
+                DCD     ADC1_2_IRQHandler            ; ADC1 & ADC2
+                DCD     CAN1_TX_IRQHandler           ; CAN1 TX
+                DCD     CAN1_RX0_IRQHandler          ; CAN1 RX0
                 DCD     CAN1_RX1_IRQHandler          ; CAN1 RX1
                 DCD     CAN1_SCE_IRQHandler          ; CAN1 SCE
                 DCD     EINT9_5_IRQHandler           ; EINT Line 9..5
@@ -115,11 +115,32 @@ __Vectors       DCD     __initial_sp                 ; Top of Stack
                 DCD     USART3_IRQHandler            ; USART3
                 DCD     EINT15_10_IRQHandler         ; EINT Line 15..10
                 DCD     RTCAlarm_IRQHandler          ; RTC Alarm through EINT Line
-                DCD     USBDWakeUp_IRQHandler        ; USBD Wakeup from suspend
-                DCD     FPU_IRQHandler               ; FPU
-                DCD     QSPI_IRQHandler              ; QSPI
-                DCD     USBD2_HP_IRQHandler          ; USBD2 High Priority
-                DCD     USBD2_LP_IRQHandler          ; USBD2 Low Priority
+                DCD     OTG_FS_WKUP_IRQHandler       ; USBD Wakeup from suspend
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     0                            ; Reserved
+                DCD     TMR5_IRQHandler              ; TMR5
+                DCD     SPI3_IRQHandler              ; SPI3
+                DCD     UART4_IRQHandler             ; UART4
+                DCD     UART5_IRQHandler             ; UART5
+                DCD     TMR6_IRQHandler              ; TMR6
+                DCD     TMR7_IRQHandler              ; TMR7
+                DCD     DMA2_Channel1_IRQHandler     ; DMA2 Channel1
+                DCD     DMA2_Channel2_IRQHandler     ; DMA2 Channel2
+                DCD     DMA2_Channel3_IRQHandler     ; DMA2 Channel3
+                DCD     DMA2_Channel4_IRQHandler     ; DMA2 Channel4
+                DCD     DMA2_Channel5_IRQHandler     ; DMA2 Channel5
+                DCD     ETH_IRQHandler               ; ETH
+                DCD     ETH_WKUP_IRQHandler          ; ETH Wake up
+                DCD     CAN2_TX_IRQHandler           ; CAN2 TX
+                DCD     CAN2_RX0_IRQHandler          ; CAN2 RX0
+                DCD     CAN2_RX1_IRQHandler          ; CAN2 RX1
+                DCD     CAN2_SCE_IRQHandler          ; CAN2 SCE
+                DCD     OTG_FS_IRQHandler            ; OTG FS
 __Vectors_End
 
 __Vectors_Size  EQU  __Vectors_End - __Vectors
@@ -127,15 +148,15 @@ __Vectors_Size  EQU  __Vectors_End - __Vectors
                 AREA    |.text|, CODE, READONLY
 
 ; Reset handler
-Reset_Handler    PROC
-                 EXPORT  Reset_Handler               [WEAK]
-     IMPORT  __main
-     IMPORT  SystemInit
-                 LDR     R0, =SystemInit
-                 BLX     R0
-                 LDR     R0, =__main
-                 BX      R0
-                 ENDP
+Reset_Handler   PROC
+                EXPORT  Reset_Handler                [WEAK]
+                IMPORT  __main
+                IMPORT  SystemInit
+                LDR     R0, =SystemInit
+                BLX     R0
+                LDR     R0, =__main
+                BX      R0
+                ENDP
 
 ; Dummy Exception Handlers (infinite loops which can be modified)
 
@@ -202,8 +223,8 @@ Default_Handler PROC
                 EXPORT  DMA1_Channel6_IRQHandler     [WEAK]
                 EXPORT  DMA1_Channel7_IRQHandler     [WEAK]
                 EXPORT  ADC1_2_IRQHandler            [WEAK]
-                EXPORT  USBD1_HP_CAN1_TX_IRQHandler  [WEAK]
-                EXPORT  USBD1_LP_CAN1_RX0_IRQHandler [WEAK]
+                EXPORT  CAN1_TX_IRQHandler           [WEAK]
+                EXPORT  CAN1_RX0_IRQHandler          [WEAK]
                 EXPORT  CAN1_RX1_IRQHandler          [WEAK]
                 EXPORT  CAN1_SCE_IRQHandler          [WEAK]
                 EXPORT  EINT9_5_IRQHandler           [WEAK]
@@ -225,11 +246,25 @@ Default_Handler PROC
                 EXPORT  USART3_IRQHandler            [WEAK]
                 EXPORT  EINT15_10_IRQHandler         [WEAK]
                 EXPORT  RTCAlarm_IRQHandler          [WEAK]
-                EXPORT  USBDWakeUp_IRQHandler        [WEAK]
-                EXPORT  FPU_IRQHandler               [WEAK]
-                EXPORT  QSPI_IRQHandler              [WEAK]
-                EXPORT  USBD2_HP_IRQHandler          [WEAK]
-                EXPORT  USBD2_LP_IRQHandler          [WEAK]
+                EXPORT  OTG_FS_WKUP_IRQHandler       [WEAK]
+                EXPORT  TMR5_IRQHandler              [WEAK]
+                EXPORT  SPI3_IRQHandler              [WEAK]
+                EXPORT  UART4_IRQHandler             [WEAK]
+                EXPORT  UART5_IRQHandler             [WEAK]
+                EXPORT  TMR6_IRQHandler              [WEAK]
+                EXPORT  TMR7_IRQHandler              [WEAK]
+                EXPORT  DMA2_Channel1_IRQHandler     [WEAK]
+                EXPORT  DMA2_Channel2_IRQHandler     [WEAK]
+                EXPORT  DMA2_Channel3_IRQHandler     [WEAK]
+                EXPORT  DMA2_Channel4_IRQHandler     [WEAK]
+                EXPORT  DMA2_Channel5_IRQHandler     [WEAK]
+                EXPORT  ETH_IRQHandler               [WEAK]
+                EXPORT  ETH_WKUP_IRQHandler          [WEAK]
+                EXPORT  CAN2_TX_IRQHandler           [WEAK]
+                EXPORT  CAN2_RX0_IRQHandler          [WEAK]
+                EXPORT  CAN2_RX1_IRQHandler          [WEAK]
+                EXPORT  CAN2_SCE_IRQHandler          [WEAK]
+                EXPORT  OTG_FS_IRQHandler            [WEAK]
 
 WWDT_IRQHandler
 PVD_IRQHandler
@@ -250,8 +285,8 @@ DMA1_Channel5_IRQHandler
 DMA1_Channel6_IRQHandler
 DMA1_Channel7_IRQHandler
 ADC1_2_IRQHandler
-USBD1_HP_CAN1_TX_IRQHandler
-USBD1_LP_CAN1_RX0_IRQHandler
+CAN1_TX_IRQHandler
+CAN1_RX0_IRQHandler
 CAN1_RX1_IRQHandler
 CAN1_SCE_IRQHandler
 EINT9_5_IRQHandler
@@ -273,11 +308,25 @@ USART2_IRQHandler
 USART3_IRQHandler
 EINT15_10_IRQHandler
 RTCAlarm_IRQHandler
-USBDWakeUp_IRQHandler
-FPU_IRQHandler
-QSPI_IRQHandler
-USBD2_HP_IRQHandler
-USBD2_LP_IRQHandler
+OTG_FS_WKUP_IRQHandler
+TMR5_IRQHandler
+SPI3_IRQHandler
+UART4_IRQHandler
+UART5_IRQHandler
+TMR6_IRQHandler
+TMR7_IRQHandler
+DMA2_Channel1_IRQHandler
+DMA2_Channel2_IRQHandler
+DMA2_Channel3_IRQHandler
+DMA2_Channel4_IRQHandler
+DMA2_Channel5_IRQHandler
+ETH_IRQHandler
+ETH_WKUP_IRQHandler
+CAN2_TX_IRQHandler
+CAN2_RX0_IRQHandler
+CAN2_RX1_IRQHandler
+CAN2_SCE_IRQHandler
+OTG_FS_IRQHandler
                 B       .
 
                 ENDP
@@ -313,3 +362,4 @@ __user_initial_stackheap
                  END
 
 ;*******************************END OF FILE************************************
+

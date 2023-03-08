@@ -3,9 +3,9 @@
  *
  * @brief       This file contains all the prototypes,enumeration and macros for the DMC peripheral
  *
- * @version     V1.0.2
+ * @version     V1.0.4
  *
- * @date        2022-01-05
+ * @date        2022-12-01
  *
  * @attention
  *
@@ -15,7 +15,7 @@
  *  GEEHY COPYRIGHT NOTICE (GEEHY SOFTWARE PACKAGE LICENSE).
  *
  *  The program is only for reference, which is distributed in the hope
- *  that it will be usefull and instructional for customers to develop
+ *  that it will be useful and instructional for customers to develop
  *  their software. Unless required by applicable law or agreed to in
  *  writing, the program is distributed on an "AS IS" BASIS, WITHOUT
  *  ANY WARRANTY OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,13 +26,14 @@
 #ifndef __APM32F10X_DMC_H
 #define __APM32F10X_DMC_H
 
+/* Includes */
+#include "apm32f10x.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "apm32f10x.h"
-
-/** @addtogroup Peripherals_Library Standard Peripheral Library
+/** @addtogroup APM32F10x_StdPeriphDriver
   @{
 */
 
@@ -40,10 +41,9 @@ extern "C" {
   @{
 */
 
-/** @addtogroup DMC_Enumerations Enumerations
+/** @defgroup DMC_Enumerations Enumerations
   @{
 */
-
 
 /**
  * @brief   Bank Address Width
@@ -261,8 +261,8 @@ typedef enum
  */
 typedef enum
 {
-    DMC_REFRESH_ROW_ONE,        //!< Refresh one row
-    DMC_REFRESH_ROW_ALL,        //!< Refresh all row
+    DMC_REFRESH_ROW_ONE,        /*!< Refresh one row */
+    DMC_REFRESH_ROW_ALL,        /*!< Refresh all row */
 } DMC_REFRESH_T;
 
 /**
@@ -270,8 +270,8 @@ typedef enum
  */
 typedef enum
 {
-    DMC_PRECHARGE_IM,        //!< Immediate precharge
-    DMC_PRECHARGE_DELAY,     //!< Delayed precharge
+    DMC_PRECHARGE_IM,        /*!< Immediate precharge */
+    DMC_PRECHARGE_DELAY,     /*!< Delayed precharge */
 } DMC_PRECHARE_T;
 
 /**
@@ -286,7 +286,7 @@ typedef enum
 /**@} end of group DMC_Enumerations*/
 
 
-/** @addtogroup DMC_Structure Data Structure
+/** @defgroup DMC_Structures Structures
   @{
 */
 
@@ -295,15 +295,15 @@ typedef enum
  */
 typedef struct
 {
-    uint32_t    latencyCAS  : 2;       //!< DMC_CAS_LATENCY_T
-    uint32_t    tRAS        : 4;       //!< DMC_RAS_MINIMUM_T
-    uint32_t    tRCD        : 3;       //!< DMC_DELAY_TIME_T
-    uint32_t    tRP         : 3;       //!< DMC_PRECHARGE_T
-    uint32_t    tWR         : 2;       //!< DMC_NEXT_PRECHARGE_T
-    uint32_t    tARP        : 4;       //!< DMC_AUTO_REFRESH_T
-    uint32_t    tCMD        : 4;       //!< DMC_ATA_CMD_T
-    uint32_t    tXSR        : 9;       //!< auto-refresh commands, can be 0x000 to 0x1FF
-    uint16_t    tRFP        : 16;      //!< Refresh period, can be 0x0000 to 0xFFFF
+    uint32_t    latencyCAS  : 2;       /*!< DMC_CAS_LATENCY_T */
+    uint32_t    tRAS        : 4;       /*!< DMC_RAS_MINIMUM_T */
+    uint32_t    tRCD        : 3;       /*!< DMC_DELAY_TIME_T */
+    uint32_t    tRP         : 3;       /*!< DMC_PRECHARGE_T */
+    uint32_t    tWR         : 2;       /*!< DMC_NEXT_PRECHARGE_T */
+    uint32_t    tARP        : 4;       /*!< DMC_AUTO_REFRESH_T */
+    uint32_t    tCMD        : 4;       /*!< DMC_ATA_CMD_T */
+    uint32_t    tXSR        : 9;       /*!< auto-refresh commands, can be 0x000 to 0x1FF */
+    uint16_t    tRFP        : 16;      /*!< Refresh period, can be 0x0000 to 0xFFFF */
 } DMC_TimingConfig_T;
 
 /**
@@ -311,50 +311,50 @@ typedef struct
  */
 typedef struct
 {
-    DMC_MEMORY_SIZE_T       memorySize;    //!< Memory size(byte)
-    DMC_BANK_WIDTH_T        bankWidth;     //!< Number of bank bits
-    DMC_ROW_WIDTH_T         rowWidth;      //!< Number of row address bits
-    DMC_COL_WIDTH_T         colWidth;      //!< Number of col address bits
-    DMC_CLK_PHASE_T         clkPhase;      //!< Clock phase
-    DMC_TimingConfig_T      timing;        //!< Timing
+    DMC_MEMORY_SIZE_T       memorySize;    /*!< Memory size(byte) */
+    DMC_BANK_WIDTH_T        bankWidth;     /*!< Number of bank bits */
+    DMC_ROW_WIDTH_T         rowWidth;      /*!< Number of row address bits */
+    DMC_COL_WIDTH_T         colWidth;      /*!< Number of col address bits */
+    DMC_CLK_PHASE_T         clkPhase;      /*!< Clock phase */
+    DMC_TimingConfig_T      timing;        /*!< Timing */
 } DMC_Config_T;
 
-/**@} end of group DMC_Structure*/
+/**@} end of group DMC_Structures*/
 
 
-/** @addtogroup DMC_Fuctions Fuctions
+/** @defgroup DMC_Functions Functions
   @{
 */
 
-/** Enable / Disable */
+/* Enable / Disable */
 void DMC_Enable(void);
 void DMC_Disable(void);
 void DMC_EnableInit(void);
 
-/** Global config */
-void DMC_Config(DMC_Config_T *dmcConfig);
-void DMC_ConfigStructInit(DMC_Config_T *dmcConfig);
+/* Global config */
+void DMC_Config(DMC_Config_T* dmcConfig);
+void DMC_ConfigStructInit(DMC_Config_T* dmcConfig);
 
-/** Address */
+/* Address */
 void DMC_ConfigBankWidth(DMC_BANK_WIDTH_T bankWidth);
 void DMC_ConfigAddrWidth(DMC_ROW_WIDTH_T rowWidth, DMC_COL_WIDTH_T colWidth);
 
-/** Timing */
-void DMC_ConfigTiming(DMC_TimingConfig_T *timingConfig);
-void DMC_ConfigTimingStructInit(DMC_TimingConfig_T *timingConfig);
+/* Timing */
+void DMC_ConfigTiming(DMC_TimingConfig_T* timingConfig);
+void DMC_ConfigTimingStructInit(DMC_TimingConfig_T* timingConfig);
 void DMC_ConfigStableTimePowerup(uint16_t stableTime);
 void DMC_ConfigAutoRefreshNumDuringInit(DMC_AUTO_REFRESH_T num);
 void DMC_ConfigRefreshPeriod(uint16_t period);
 
-/** Refresh mode */
+/* Refresh mode */
 void DMC_EixtSlefRefreshMode(void);
 void DMC_EnterSlefRefreshMode(void);
 
-/** Accelerate Module */
+/* Accelerate Module */
 void DMC_EnableAccelerateModule(void);
 void DMC_DisableAccelerateModule(void);
 
-/** Config */
+/* Config */
 void DMC_ConfigOpenBank(DMC_BANK_NUMBER_T num);
 void DMC_EnableUpdateMode(void);
 void DMC_EnterPowerdownMode(void);
@@ -365,12 +365,12 @@ void DMC_ConfigMemorySize(DMC_MEMORY_SIZE_T memorySize);
 void DMC_ConfigClockPhase(DMC_CLK_PHASE_T clkPhase);
 void DMC_ConfigWRAPB(DMC_WRPB_T burst);
 
-/** read flag */
+/* read flag */
 uint8_t DMC_ReadSelfRefreshStatus(void);
 
-/**@} end of group DMC_Fuctions*/
+/**@} end of group DMC_Functions*/
 /**@} end of group DMC_Driver*/
-/**@} end of group Peripherals_Library*/
+/**@} end of group APM32F10x_StdPeriphDriver*/
 
 #ifdef __cplusplus
 }
