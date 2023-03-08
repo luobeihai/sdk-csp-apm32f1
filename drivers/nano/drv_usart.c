@@ -1,20 +1,18 @@
 /*
- * Copyright (c) 2006-2022, RT-Thread Development Team
+ * Copyright (c) 2006-2023, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
  *
  * Change Logs:
  * Date           Author        Notes
  * 2022-03-21     Stevetong459  first version
+ * 2023-03-08     luobeihai     add rt_hw_console_getchar function
  */
 
 #include <string.h>
 #include <stdlib.h>
-#include <apm32f10x.h>
 #include <board.h>
-#include <apm32f10x_usart.h>
-#include <apm32f10x_gpio.h>
-#include <apm32f10x_rcm.h>
+#include "drv_common.h"
 
 struct apm32_usart
 {
@@ -86,14 +84,17 @@ int uart_init()
         RCM_EnableAPB2PeriphClock(RCM_APB2_PERIPH_GPIOA << (_uart_port_get(usart_config[i].rx_pin_name) - 'A'));
 
         GPIO_ConfigStruct.mode = GPIO_MODE_AF_PP;
-        GPIO_ConfigStruct.pin = 1 << _uart_pin_get(usart_config[i].rx_pin_name);
         GPIO_ConfigStruct.pin |= 1 << _uart_pin_get(usart_config[i].tx_pin_name);
         GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
         GPIO_Config(gpio_port, &GPIO_ConfigStruct);
 
+        GPIO_ConfigStruct.mode = GPIO_MODE_IN_PU;
+        GPIO_ConfigStruct.pin = 1 << _uart_pin_get(usart_config[i].rx_pin_name);
+        GPIO_Config(gpio_port, &GPIO_ConfigStruct);
+
         USART_ConfigStruct.baudRate = 115200;
         USART_ConfigStruct.hardwareFlow = USART_HARDWARE_FLOW_NONE;
-        USART_ConfigStruct.mode = USART_MODE_TX;
+        USART_ConfigStruct.mode = USART_MODE_TX_RX;
         USART_ConfigStruct.parity = USART_PARITY_NONE;
         USART_ConfigStruct.stopBits = USART_STOP_BIT_1;
         USART_ConfigStruct.wordLength = USART_WORD_LEN_8B;
@@ -112,6 +113,7 @@ int uart_init()
 
     return 0;
 }
+
 void rt_hw_console_output(const char *str)
 {
     rt_size_t i = 0, size = 0;
@@ -139,3 +141,39 @@ void rt_hw_console_output(const char *str)
 #endif
     }
 }
+
+#ifdef RT_USING_FINSH
+char rt_hw_console_getchar(void)
+{
+    int ch = -1;
+#if defined(BSP_USING_UART1)
+    if (USART_ReadStatusFlag(USART1, USART_FLAG_RXBNE) != RESET)
+    {
+        ch = USART_RxData(USART1);
+    }
+    else
+    {
+        if (USART_ReadStatusFlag(USART1, USART_FLAG_OVRE) != RESET)
+        {
+            USART_ClearStatusFlag(USART1, USART_FLAG_OVRE);
+        }
+        rt_thread_mdelay(10);
+    }
+#elif defined BSP_USING_UART2
+    if (USART_ReadStatusFlag(USART2, USART_FLAG_RXBNE) != RESET)
+    {
+        ch = USART_RxData(USART2);
+    }
+    else
+    {
+        if (USART_ReadStatusFlag(USART2, USART_FLAG_OVRE) != RESET)
+        {
+            USART_ClearStatusFlag(USART2, USART_FLAG_OVRE);
+        }
+        rt_thread_mdelay(10);
+    }
+#endif
+
+    return ch;
+}
+#endif /* RT_USING_FINSH */

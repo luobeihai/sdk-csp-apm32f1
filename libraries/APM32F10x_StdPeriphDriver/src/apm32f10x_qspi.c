@@ -65,6 +65,8 @@ void QSPI_Reset(void)
     QSPI->RFTL = QSPI_RFTL_RESET_VALUE;
     QSPI->STS = QSPI_STS_RESET_VALUE;
     QSPI->RSD = QSPI_RSD_RESET_VALUE;
+
+    dummy |= 0;
 }
 
 /*!
@@ -545,6 +547,8 @@ void QSPI_ClearStatusFlag(void)
     volatile uint32_t dummy = 0;
 
     dummy = QSPI->STS;
+
+     dummy |= 0;
 }
 
 /*!
@@ -602,6 +606,8 @@ void QSPI_ClearIntFlag(uint32_t flag)
     {
         dummy = QSPI->MIC;
     }
+
+    dummy |= 0;
 }
 
 /**@} end of group QSPI_Functions*/

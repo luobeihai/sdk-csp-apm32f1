@@ -7,6 +7,7 @@
  * Date           Author       Notes
  * 2020-08-20     Abbcc        first version
  * 2022-03-04     stevetong459 FINSH_FUNCTION_EXPORT_ALIAS change to MSH_CMD_EXPORT for reboot function.
+ * 2023-03-08     luobeihai    modified hw_board_init function
  */
 
 #include "drv_common.h"
@@ -101,22 +102,11 @@ void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target
     /* Systick initialization */
     rt_hw_systick_init();
 
+    /* USART driver initialization is open by default */
+    uart_init();
+
     /* Pin driver initialization is open by default */
 #ifdef RT_USING_PIN
     rt_hw_pin_init();
 #endif
-
-    /* USART driver initialization is open by default */
-    uart_init();
-
-    /* Set the shell console output device */
-#if defined(RT_USING_CONSOLE) && defined(RT_USING_DEVICE)
-    rt_console_set_device(RT_CONSOLE_DEVICE_NAME);
-#endif
-
-    /* Board underlying hardware initialization */
-#ifdef RT_USING_COMPONENTS_INIT
-    rt_components_board_init();
-#endif
 }
-

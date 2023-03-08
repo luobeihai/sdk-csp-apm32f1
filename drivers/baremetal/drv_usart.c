@@ -86,9 +86,12 @@ int uart_init()
         RCM_EnableAPB2PeriphClock(RCM_APB2_PERIPH_GPIOA << (_uart_port_get(usart_config[i].rx_pin_name) - 'A'));
 
         GPIO_ConfigStruct.mode = GPIO_MODE_AF_PP;
-        GPIO_ConfigStruct.pin = 1 << _uart_pin_get(usart_config[i].rx_pin_name);
         GPIO_ConfigStruct.pin |= 1 << _uart_pin_get(usart_config[i].tx_pin_name);
         GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
+        GPIO_Config(gpio_port, &GPIO_ConfigStruct);
+
+        GPIO_ConfigStruct.mode = GPIO_MODE_IN_PU;
+        GPIO_ConfigStruct.pin = 1 << _uart_pin_get(usart_config[i].rx_pin_name);
         GPIO_Config(gpio_port, &GPIO_ConfigStruct);
 
         USART_ConfigStruct.baudRate = 115200;

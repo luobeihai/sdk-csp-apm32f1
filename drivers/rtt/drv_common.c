@@ -7,6 +7,7 @@
  * Date           Author       Notes
  * 2020-08-20     Abbcc        first version
  * 2022-03-04     stevetong459 FINSH_FUNCTION_EXPORT_ALIAS change to MSH_CMD_EXPORT for reboot function.
+ * 2023-03-08     luobeihai    modified hw_board_init function
  */
 
 #include "drv_common.h"
@@ -104,7 +105,6 @@ void apm32_usart_init(void)
 
     GPIO_ConfigStruct.mode = GPIO_MODE_IN_PU;
     GPIO_ConfigStruct.pin = GPIO_PIN_10;
-    GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
     GPIO_Config(GPIOA, &GPIO_ConfigStruct);
 #endif
 
@@ -119,7 +119,6 @@ void apm32_usart_init(void)
 
     GPIO_ConfigStruct.mode = GPIO_MODE_IN_PU;
     GPIO_ConfigStruct.pin = GPIO_PIN_3;
-    GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
     GPIO_Config(GPIOA, &GPIO_ConfigStruct);
 #endif
 }
@@ -143,15 +142,4 @@ void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target
 #ifdef RT_USING_SERIAL
     rt_hw_usart_init();
 #endif
-
-    /* Set the shell console output device */
-#if defined(RT_USING_CONSOLE) && defined(RT_USING_DEVICE)
-    rt_console_set_device(RT_CONSOLE_DEVICE_NAME);
-#endif
-
-    /* Board underlying hardware initialization */
-#ifdef RT_USING_COMPONENTS_INIT
-    rt_components_board_init();
-#endif
 }
-

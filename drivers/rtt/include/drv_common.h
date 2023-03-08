@@ -6,6 +6,7 @@
  * Change Logs:
  * Date           Author       Notes
  * 2020-08-20     Abbcc        first version
+ * 2023-03-08     luobeihai    modified FLASH and RAM micro definition
  */
 
 #ifndef __DRV_COMMON_H__
@@ -17,6 +18,7 @@
     #include <rtdevice.h>
 #endif
 
+#include "apm32_msp.h"
 #include "apm32f10x_gpio.h"
 #include "apm32f10x_rcm.h"
 #include "apm32f10x_misc.h"
@@ -44,6 +46,9 @@
     #include "apm32f10x_iwdt.h"
     #include "apm32f10x_wwdt.h"
 #endif
+#if defined(BSP_USING_ETH) || defined(RT_USING_LWIP)
+    #include "apm32f10x_eth.h"
+#endif
 
 #include "drv_common.h"
 #include "drv_gpio.h"
@@ -52,13 +57,13 @@
 extern "C" {
 #endif
 
-#define APM32_FLASH_START_ADRESS     ((uint32_t)0x08000000)
-#define APM32_FLASH_SIZE             (512 * 1024)
-#define APM32_FLASH_END_ADDRESS      ((uint32_t)(APM32_FLASH_START_ADRESS + APM32_FLASH_SIZE))
+#define APM32_FLASH_START_ADRESS       ROM_START
+#define APM32_FLASH_SIZE               ROM_SIZE
+#define APM32_FLASH_END_ADDRESS        ROM_END
 
-/* Internal SRAM memory size[Kbytes] <6-128>, Default: 128 */
-#define APM32_SRAM_SIZE      128
-#define APM32_SRAM_END       (0x20000000 + APM32_SRAM_SIZE * 1024)
+#define APM32_SRAM_SIZE                RAM_SIZE
+#define APM32_SRAM_START               RAM_START
+#define APM32_SRAM_END                 RAM_END
 
 #if defined(__ARMCC_VERSION)
 extern int Image$$RW_IRAM1$$ZI$$Limit;
