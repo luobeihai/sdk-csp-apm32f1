@@ -96,7 +96,7 @@ void apm32_usart_init(void)
     GPIO_Config_T GPIO_ConfigStruct;
 
 #ifdef BSP_USING_UART1
-    RCM_EnableAPB2PeriphClock((RCM_APB2_PERIPH_T)(RCM_APB2_PERIPH_GPIOA | RCM_APB2_PERIPH_USART1));
+    RCM_EnableAPB2PeriphClock(RCM_APB2_PERIPH_GPIOA | RCM_APB2_PERIPH_USART1);
 
     GPIO_ConfigStruct.mode = GPIO_MODE_AF_PP;
     GPIO_ConfigStruct.pin = GPIO_PIN_9;
@@ -120,6 +120,34 @@ void apm32_usart_init(void)
     GPIO_ConfigStruct.mode = GPIO_MODE_IN_PU;
     GPIO_ConfigStruct.pin = GPIO_PIN_3;
     GPIO_Config(GPIOA, &GPIO_ConfigStruct);
+#endif
+
+#ifdef BSP_USING_UART3
+    RCM_EnableAPB2PeriphClock(RCM_APB2_PERIPH_GPIOB);
+    RCM_EnableAPB1PeriphClock(RCM_APB1_PERIPH_USART3);
+
+    GPIO_ConfigStruct.mode = GPIO_MODE_AF_PP;
+    GPIO_ConfigStruct.pin = GPIO_PIN_10;
+    GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
+    GPIO_Config(GPIOB, &GPIO_ConfigStruct);
+
+    GPIO_ConfigStruct.mode = GPIO_MODE_IN_FLOATING;
+    GPIO_ConfigStruct.pin = GPIO_PIN_11;
+    GPIO_Config(GPIOB, &GPIO_ConfigStruct);
+#endif
+
+#ifdef BSP_USING_UART4
+    RCM_EnableAPB2PeriphClock(RCM_APB2_PERIPH_GPIOC);
+    RCM_EnableAPB1PeriphClock(RCM_APB1_PERIPH_UART4);
+
+    GPIO_ConfigStruct.mode = GPIO_MODE_AF_PP;
+    GPIO_ConfigStruct.pin = GPIO_PIN_10;
+    GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
+    GPIO_Config(GPIOC, &GPIO_ConfigStruct);
+
+    GPIO_ConfigStruct.mode = GPIO_MODE_IN_FLOATING;
+    GPIO_ConfigStruct.pin = GPIO_PIN_11;
+    GPIO_Config(GPIOC, &GPIO_ConfigStruct);
 #endif
 }
 

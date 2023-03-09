@@ -127,50 +127,28 @@ void apm32_msp_eth_init(void *Instance)
         ETH_MII_TXD0/ETH_RMII_TXD0 -------> PB12
         ETH_MII_TXD1/ETH_RMII_TXD1 -------> PB13
     */
+    /* Configure PA1 as input floating */
     GPIO_ConfigStruct.pin = GPIO_PIN_1;
     GPIO_ConfigStruct.mode  = GPIO_MODE_IN_FLOATING;
     GPIO_Config(GPIOA, &GPIO_ConfigStruct);
 
+    /* Configure PD8, PD9, PD10 as input floating */
     GPIO_ConfigStruct.pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10;
     GPIO_ConfigStruct.mode = GPIO_MODE_IN_FLOATING;
     GPIO_Config(GPIOD, &GPIO_ConfigStruct);
 
-    /* Configure PA2 */
+    /* Configure PA2 as alternate function output Push-pull*/
     GPIO_ConfigStruct.pin = GPIO_PIN_2;
     GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
     GPIO_ConfigStruct.mode  = GPIO_MODE_AF_PP;
     GPIO_Config(GPIOA, &GPIO_ConfigStruct);
 
+    /* Configure PC1 as alternate function output Push-pull */
     GPIO_ConfigStruct.pin = GPIO_PIN_1;
     GPIO_Config(GPIOC, &GPIO_ConfigStruct);
 
     /* Configure PB11, PB12, PB13 as alternate function push-pull */
     GPIO_ConfigStruct.pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13;
     GPIO_Config(GPIOB, &GPIO_ConfigStruct);
-
-    /* ETH and CAN shared PB8, RMII Mode PB8 Must be output low */
-    GPIO_ConfigStruct.pin = GPIO_PIN_8;
-    GPIO_ConfigStruct.mode = GPIO_MODE_OUT_PP;
-    GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
-    GPIO_Config(GPIOB, &GPIO_ConfigStruct);
-    GPIO_ResetBit(GPIOB, GPIO_PIN_8);
-
-    /* Configure PA8 output 25MHz clock */
-    GPIO_ConfigStruct.pin = GPIO_PIN_8;
-    GPIO_ConfigStruct.speed = GPIO_SPEED_50MHz;
-    GPIO_ConfigStruct.mode  = GPIO_MODE_AF_PP;
-    GPIO_Config(GPIOA, &GPIO_ConfigStruct);
-
-    /* Set PLL3 clock output to 50MHz (25MHz /5 *10 =50MHz) */
-    RCM_ConfigPLL3(RCM_PLL3MF_10);
-
-    /* Enable PLL3 */
-    RCM_EnablePLL3();
-
-    /* Wait till PLL3 is ready */
-    while(RCM_ReadStatusFlag(RCM_FLAG_PLL3RDY) == RESET);
-
-    /* Get PLL3 clock on PA8 pin (MCO) */
-    RCM_ConfigMCO(RCM_MCOCLK_PLL3CLK);
 #endif
 }

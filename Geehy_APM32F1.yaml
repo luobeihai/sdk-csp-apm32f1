@@ -563,6 +563,8 @@ series:
           putc: none
           sysTick: none
         marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
         - APM32F10X_HD
         source_files:
         - drivers\baremetal
@@ -575,6 +577,8 @@ series:
           sysTick: none
           heap_init: none
         marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
         - APM32F10X_HD
         source_files:
         - drivers\nano
@@ -585,7 +589,501 @@ series:
           rt_hw_pin_register: none
           heap_init: none
         marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
         - APM32F10X_HD
+        source_files:
+        - drivers\rtt
+  - sub_series_name: APM32F105
+    chips:
+    - chip_name: APM32F105R8T6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00010000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F105x8\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    - chip_name: APM32F105RBT6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00020000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F105xB\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    - chip_name: APM32F105RCT6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00040000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F105xC\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    - chip_name: APM32F105V8T6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00010000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F105x8\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    - chip_name: APM32F105VBT6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00020000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F105xB\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    - chip_name: APM32F105VCT6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00040000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F105xC\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    ui:
+      uart:
+        default_value: UART1
+        prompt_message_en: select one uart as console output interface
+        prompt_message_zh: 选择一个串口作为控制台信息输出接口
+      tx_pin:
+        default_value: PA9
+        prompt_message_en: 'set the tx pin name of the console device interface, the
+          value should be with a format"P+[port name][pin number]",eg. PA9 '
+        prompt_message_zh: 设置控制台设备的数据发送引脚的名称, 名称应该具有以下格式“P+[端口名称][端口编号]”, 比如：PA9
+      rx_pin:
+        default_value: PA10
+        prompt_message_en: 'set the rx pin name of the console device interface, the
+          value should be with a format"P+[port name][pin number]", eg. PA10 '
+        prompt_message_zh: 设置控制台设备的数据发送引脚的名称，名称应该具有以下格式“P+[端口名称][端口编号]”, 比如：PA10
+    docs:
+    - file: Documents\DATASHEET.pdf
+      title: APM32 series MCU datasheet
+    svd:
+      file: debug\svd\APM32F105xx.svd
+    project_type:
+      bare_metal:
+        function_map:
+          clk_init: none
+          uart_init: none
+          putc: none
+          sysTick: none
+        marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
+        - APM32F10X_CL
+        source_files:
+        - drivers\baremetal
+      rtt_nano:
+        function_map:
+          clk_init: none
+          uart_init: none
+          putc: none
+          getc: none
+          sysTick: none
+          heap_init: none
+        marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
+        - APM32F10X_CL
+        source_files:
+        - drivers\nano
+      rtt:
+        function_map:
+          rt_hw_board_init;: none
+          rt_hw_serial_register: none
+          rt_hw_pin_register: none
+          heap_init: none
+        marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
+        - APM32F10X_CL
+        source_files:
+        - drivers\rtt
+  - sub_series_name: APM32F107
+    chips:
+    - chip_name: APM32F107RBT6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00020000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F107xB\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    - chip_name: APM32F107RCT6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00040000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F107xC\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    - chip_name: APM32F107VBT6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00020000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F107xB\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    - chip_name: APM32F107VCT6
+      peripheral: {}
+      memory:
+      - id: IROM1
+        start: '0x08000000'
+        size: '0x00040000'
+        default: '1'
+      - id: IRAM1
+        start: '0x20000000'
+        size: '0x00010000'
+        init: '0'
+        default: '1'
+      cpu_info:
+        max_clock: '96000000'
+        fpu: '0'
+        mpu: '0'
+        endian: Little-endian
+      compiler:
+        gcc:
+          entry_point: entry
+          link_script: linkscripts\APM32F107xC\link.lds
+          marco:
+          - APM32F10X_CL
+          files:
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Include\apm32f10x.h
+          - libraries\CMSIS\Lib\GCC
+          - libraries\CMSIS\Device\Geehy\APM32F10x\Source\gcc\startup_apm32f10x_cl.s
+        armcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+        iarcc:
+          entry_point: none
+          link_script: none
+          marco: []
+          files: []
+    ui:
+      uart:
+        default_value: UART1
+        prompt_message_en: select one uart as console output interface
+        prompt_message_zh: 选择一个串口作为控制台信息输出接口
+      tx_pin:
+        default_value: PA9
+        prompt_message_en: 'set the tx pin name of the console device interface, the
+          value should be with a format"P+[port name][pin number]",eg. PA9 '
+        prompt_message_zh: 设置控制台设备的数据发送引脚的名称, 名称应该具有以下格式“P+[端口名称][端口编号]”, 比如：PA9
+      rx_pin:
+        default_value: PA10
+        prompt_message_en: 'set the rx pin name of the console device interface, the
+          value should be with a format"P+[port name][pin number]", eg. PA10 '
+        prompt_message_zh: 设置控制台设备的数据发送引脚的名称，名称应该具有以下格式“P+[端口名称][端口编号]”, 比如：PA10
+    docs:
+    - file: Documents\DATASHEET.pdf
+      title: APM32 series MCU datasheet
+    svd:
+      file: debug\svd\APM32F107xx.svd
+    project_type:
+      bare_metal:
+        function_map:
+          clk_init: none
+          uart_init: none
+          putc: none
+          sysTick: none
+        marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
+        - APM32F10X_CL
+        source_files:
+        - drivers\baremetal
+      rtt_nano:
+        function_map:
+          clk_init: none
+          uart_init: none
+          putc: none
+          getc: none
+          sysTick: none
+          heap_init: none
+        marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
+        - APM32F10X_CL
+        source_files:
+        - drivers\nano
+      rtt:
+        function_map:
+          rt_hw_board_init;: none
+          rt_hw_serial_register: none
+          rt_hw_pin_register: none
+          heap_init: none
+        marco:
+        - SOC_FAMILY_APM32
+        - SOC_SERIES_APM32F1
+        - APM32F10X_CL
         source_files:
         - drivers\rtt
   docs:
