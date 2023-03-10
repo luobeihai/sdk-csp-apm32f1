@@ -2,7 +2,7 @@
 vendor: Geehy
 dvendor: Geehy
 name: APM32F1
-version: 1.0.0
+version: 1.0.1
 yaml_version: 1
 type: Chip_Support_Packages
 family_name: APM32
