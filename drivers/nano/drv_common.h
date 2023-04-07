@@ -22,7 +22,7 @@
 #include "apm32f10x_rcm.h"
 #include "apm32f10x_eint.h"
 #include "apm32f10x_usart.h"
-
+#include "apm32f10x_dma.h"
 
 #ifdef __cplusplus
 extern "C" {

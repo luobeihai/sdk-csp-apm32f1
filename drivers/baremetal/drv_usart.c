@@ -6,6 +6,7 @@
  * Change Logs:
  * Date           Author        Notes
  * 2022-03-21     Stevetong459  first version
+ * 2023-04-07     luobeihai     fix uart send first character bug
  */
 
 #include <string.h>
@@ -82,6 +83,23 @@ int uart_init()
 
     for (i = 0; i < sizeof(usart_config) / sizeof(struct apm32_usart); i++)
     {
+        USART_ConfigStruct.baudRate = 115200;
+        USART_ConfigStruct.hardwareFlow = USART_HARDWARE_FLOW_NONE;
+        USART_ConfigStruct.mode = USART_MODE_TX;
+        USART_ConfigStruct.parity = USART_PARITY_NONE;
+        USART_ConfigStruct.stopBits = USART_STOP_BIT_1;
+        USART_ConfigStruct.wordLength = USART_WORD_LEN_8B;
+#ifdef BSP_USING_UART1
+        RCM_EnableAPB2PeriphClock(RCM_APB2_PERIPH_USART1);
+        USART_Config(USART1, &USART_ConfigStruct);
+        USART_Enable(USART1);
+#endif
+#ifdef BSP_USING_UART2
+        RCM_EnableAPB1PeriphClock(RCM_APB1_PERIPH_USART2);
+        USART_Config(USART2, &USART_ConfigStruct);
+        USART_Enable(USART2);
+#endif
+
         gpio_port = (GPIO_T *)(GPIOA_BASE + 0x400 * (_uart_port_get(usart_config[i].rx_pin_name) - 'A'));
         RCM_EnableAPB2PeriphClock(RCM_APB2_PERIPH_GPIOA << (_uart_port_get(usart_config[i].rx_pin_name) - 'A'));
 
@@ -93,24 +111,6 @@ int uart_init()
         GPIO_ConfigStruct.mode = GPIO_MODE_IN_PU;
         GPIO_ConfigStruct.pin = 1 << _uart_pin_get(usart_config[i].rx_pin_name);
         GPIO_Config(gpio_port, &GPIO_ConfigStruct);
-
-        USART_ConfigStruct.baudRate = 115200;
-        USART_ConfigStruct.hardwareFlow = USART_HARDWARE_FLOW_NONE;
-        USART_ConfigStruct.mode = USART_MODE_TX;
-        USART_ConfigStruct.parity = USART_PARITY_NONE;
-        USART_ConfigStruct.stopBits = USART_STOP_BIT_1;
-        USART_ConfigStruct.wordLength = USART_WORD_LEN_8B;
-
-#ifdef BSP_USING_UART1
-        RCM_EnableAPB2PeriphClock(RCM_APB2_PERIPH_USART1);
-        USART_Config(USART1, &USART_ConfigStruct);
-        USART_Enable(USART1);
-#endif
-#ifdef BSP_USING_UART2
-        RCM_EnableAPB1PeriphClock(RCM_APB1_PERIPH_USART2);
-        USART_Config(USART2, &USART_ConfigStruct);
-        USART_Enable(USART2);
-#endif
     }
 
     return 0;

@@ -13,14 +13,6 @@
 #include "drv_common.h"
 #include "board.h"
 
-#ifdef RT_USING_SERIAL
-    #ifdef RT_USING_SERIAL_V2
-        #include "drv_usart_v2.h"
-    #else
-        #include "drv_usart.h"
-    #endif
-#endif
-
 #ifdef RT_USING_FINSH
 #include <finsh.h>
 static void reboot(uint8_t argc, char **argv)
@@ -107,6 +99,13 @@ void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target
 
     /* Pin driver initialization is open by default */
 #ifdef RT_USING_PIN
+    extern int rt_hw_pin_init(void);
     rt_hw_pin_init();
+#endif
+
+    /* USART driver initialization is open by default */
+#ifdef RT_USING_SERIAL
+    extern int rt_hw_usart_init(void);
+    rt_hw_usart_init();
 #endif
 }
